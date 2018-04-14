@@ -11,20 +11,24 @@
  <!-- AngularJSを読み込みます -->
  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
-  <title>AngularJS基礎</title>
+  <title>QR-Attendance-Management</title>
    
 </head>
 <body>
-  <h1>AngularJS基礎</h1>
-  <input type="number" ng-model="choose">
-  <p>おはようございます！今日は{{choose}}です</p>
+  <h1>QRを読み取ってください</h1>
+  <!--<input type="number" ng-model="choose"><p>おはようございます！今日は{{choose}}です</p>-->
   <hr>
   <p>Render in table</p>
 <div id="qrcodeTable"></div>
+<hr>
 <p>Render in canvas</p>
 <div id="qrcodeCanvas"></div>
+<hr>
+<p>test Text QRCode</p>
+<div id="qrcode"></div>
 <script>
-	//jQuery('#qrcode').qrcode("this plugin is great");
+
+	jQuery('#qrcode').qrcode("this plugin is great");
 	jQuery('#qrcodeTable').qrcode({
 		render	: "table",
 		text	: "http://jetienne.com"
