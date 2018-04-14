@@ -2,40 +2,72 @@
 <!DOCTYPE html>
 <html lang="ja" ng-app>
 <head>
+  <title>QR-Attendance-Management</title>
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
   
-  
-  
  <!-- AngularJSを読み込みます -->
  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+ 
 
-  <title>QR-Attendance-Management</title>
-   
+ <script type="text/javascript">
+  var year;  
+    var month;
+    var day;  
+    var hour;  
+    var min;   
+    var sec;   
+    var res; 
+    setInterval('clock()',500);
+    function clock(){
+      // リアルタイムで時間表示
+      document.getElementById("dateNow").innerHTML="現在の時間は"+ realTime() + "です。";
+    }
+    // Dateの取得 
+  function realTime(){
+     d = new Date();
+     year  = d.getFullYear();
+     month = d.getMonth() + 1;
+     day   = d.getDate();
+     hour  = ( d.getHours()   < 10 ) ? '0' + d.getHours()   : d.getHours();
+     min   = ( d.getMinutes() < 10 ) ? '0' + d.getMinutes() : d.getMinutes();
+     sec   = ( d.getSeconds() < 10 ) ? '0' + d.getSeconds() : d.getSeconds();
+     res = ( year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec );
+      return res;
+  }
+ </script>
 </head>
+
 <body>
   <h1>QRを読み取ってください</h1>
-  <!--<input type="number" ng-model="choose"><p>おはようございます！今日は{{choose}}です</p>-->
-  <hr>
-  <p>Render in table</p>
-<div id="qrcodeTable"></div>
-<hr>
-<p>Render in canvas</p>
-<div id="qrcodeCanvas"></div>
-<hr>
-<p>test Text QRCode</p>
-<div id="qrcode"></div>
-<script>
+  <p>※Please scan this QRCode※</p>
 
-	jQuery('#qrcode').qrcode("this plugin is great");
-	jQuery('#qrcodeTable').qrcode({
-		render	: "table",
-		text	: "http://jetienne.com"
-	});	
-	jQuery('#qrcodeCanvas').qrcode({
-		text	: "http://jetienne.com"
-	});	
-</script>
+  <div id="dateNow">現在の時間は</div>
+  <hr>
+  <div id="qrcode" >
+    <script type="text/javascript">
+      //Dateオブジェクトを利用
+        var c = new Date();
+        var QRyear  = c.getFullYear();
+        var QRmonth = c.getMonth() + 1;
+        var QRday   = c.getDate();
+        var QRhour  = ( c.getHours()   < 10 ) ? '0' + c.getHours()   : c.getHours();
+        var QRmin   = ( c.getMinutes() < 10 ) ? '0' + c.getMinutes() : c.getMinutes();
+        var QRsec   = ( c.getSeconds() < 10 ) ? '0' + c.getSeconds() : c.getSeconds();
+        var QRres = ( QRyear + '-' + QRmonth + '-' + QRday + ' ' + QRhour + ':' + QRmin + ':' + QRsec );
+        
+       
+        jQuery('#qrcode').qrcode({
+        text:QRres
+        });
+         
+    </script>
+    <br>
+    <script>
+      document.write("QRの時間は" + QRres + "です。");
+    </script>
+
+  </div>
 </body>
 </html>
