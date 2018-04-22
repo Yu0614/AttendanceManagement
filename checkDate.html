@@ -11,63 +11,33 @@
  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
  
 
- <script type="text/javascript">
-  var year;  
-    var month;
-    var day;  
-    var hour;  
-    var min;   
-    var sec;   
-    var res; 
-    setInterval('clock()',500);
-    function clock(){
-      // リアルタイムで時間表示
-      document.getElementById("dateNow").innerHTML="現在の時間は"+ realTime() + "です。";
-    }
-    // Dateの取得 
-  function realTime(){
-     d = new Date();
-     year  = d.getFullYear();
-     month = d.getMonth() + 1;
-     day   = d.getDate();
-     hour  = ( d.getHours()   < 10 ) ? '0' + d.getHours()   : d.getHours();
-     min   = ( d.getMinutes() < 10 ) ? '0' + d.getMinutes() : d.getMinutes();
-     sec   = ( d.getSeconds() < 10 ) ? '0' + d.getSeconds() : d.getSeconds();
-     res = ( year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec );
-      return res;
-  }
- </script>
+ <script type="text/javascript" src="./js/getTime.js"></script>
+ <script type="text/javascript" src="./js/makeQR.js"></script>
+ <script type="text/javascript" src="./js/randomPass.js"></script>
 </head>
 
 <body>
-  <h1>QRを読み取ってください</h1>
-  <p>※Please scan this QRCode※</p>
-
-  <div id="dateNow">現在の時間は</div>
-  <hr>
-  <div id="qrcode" >
-    <script type="text/javascript">
-      //Dateオブジェクトを利用
-        var c = new Date();
-        var QRyear  = c.getFullYear();
-        var QRmonth = c.getMonth() + 1;
-        var QRday   = c.getDate();
-        var QRhour  = ( c.getHours()   < 10 ) ? '0' + c.getHours()   : c.getHours();
-        var QRmin   = ( c.getMinutes() < 10 ) ? '0' + c.getMinutes() : c.getMinutes();
-        var QRsec   = ( c.getSeconds() < 10 ) ? '0' + c.getSeconds() : c.getSeconds();
-        var QRres = ( QRyear + '-' + QRmonth + '-' + QRday + ' ' + QRhour + ':' + QRmin + ':' + QRsec );
-        
-       
-        jQuery('#qrcode').qrcode({
-        text:QRres
-        });
-         
-    </script>
-    <br>
+ <h1>QRを読み取ってください</h1>
+ <p>※Please scan this QRCode※</p>
+ <div id="dateNow">現在の時間は 2018-1-01 00:00:00 です</div> <hr>
+ 
+ <div id="qrcode" >
     <script>
-      document.write("QRの時間は" + QRres + "です。");
+        jQuery('#qrcode').qrcode({
+        text: realQRTime() +";" + getRndStr()
+        });
+    </script>  
+  </div> 
+  <div>
+   <script>
+      document.write("QRの時間は " + realQRTime() + " です。");
     </script>
-
+  </div>
+  <div>
+  	<script>
+      
+      document.write("ランダムキーは【" + getRndStr() + "】です。");
+    </script>
   </div>
 </body>
 </html>
