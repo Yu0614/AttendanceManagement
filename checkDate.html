@@ -10,34 +10,35 @@
  <!-- AngularJSを読み込みます -->
  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
  
-
- <script type="text/javascript" src="./js/getTime.js"></script>
- <script type="text/javascript" src="./js/makeQR.js"></script>
+ <script type="text/javascript" src="./js/makeQR.js" charset="SJIS"></script>
+ <script type="text/javascript" src="./js/clickQR.js" charset="UTF-8"></script>
  <script type="text/javascript" src="./js/randomPass.js"></script>
+ 
+
 </head>
 
 <body>
- <h1>QRを読み取ってください</h1>
+ <h1>QR de Attendance</h1>
  <p>※Please scan this QRCode※</p>
- <div id="dateNow">現在の時間は 2018-1-01 00:00:00 です</div> <hr>
+ <div id="dateNow">
+ 	現在の時間は 2018-1-01 00:00:00 です
+ </div>
+ <p>ボタンをクリックしてQRを表示</p>
+
+ <Input type="button" value="QRview" id="QRview"><br><hr>
  
- <div id="qrcode" >
-    <script>
-        jQuery('#qrcode').qrcode({
-        text: realQRTime() +";" + getRndStr()
-        });
-    </script>  
-  </div> 
-  <div>
-   <script>
-      document.write("QRの時間は " + realQRTime() + " です。");
-    </script>
-  </div>
-  <div>
-  	<script>
-      
-      document.write("ランダムキーは【" + getRndStr() + "】です。");
-    </script>
-  </div>
+ <br>
+ 
+ <div id="QRtime" ></div>
+ <div id="rndPass"></div>
+ <div id="caution"></div>  <br>
+ <div id="qrcode"></div>         
+ <script>
+		document.getElementById("QRview").onclick = function(){
+			clickQR();
+		}
+		
+ </script>
 </body>
 </html>
+

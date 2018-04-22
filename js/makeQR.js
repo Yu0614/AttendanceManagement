@@ -9,7 +9,8 @@
     var QRres; 
 	var passLength = 0;
     var charSet = null;
-
+	setInterval('clock()',500);
+	
  	function realQRTime(){
 		QRdate = new Date();
 		QRyear  = QRdate.getFullYear();
@@ -21,5 +22,12 @@
 		QRres = ( QRyear + '-' + QRmonth + '-' + QRday + ' ' + QRhour + ':' + QRmin + ':' + QRsec );
  		return QRres;
  	}
-
+ 	
+ 	
+   function clock(){
+      // リアルタイムで時間表示
+      document.getElementById("dateNow").innerHTML="現在の時間は " +realQRTime()+ " です。";
+      
+    }
+  
       

@@ -12,3 +12,5 @@ function getRndStr(){
   }
   return result;
 }
+
+
