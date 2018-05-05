@@ -1,5 +1,6 @@
 
  function clickQR(){
+		var flag=0;
 		var date=realQRTime();
 		var pass=getRndStr();
 		document.getElementById("QRtime").innerHTML ="・クリックされた時間は[" + date +"]です。";
@@ -9,4 +10,5 @@
 		jQuery("#qrcode").qrcode({
        		text: date +";" + pass
      	});
+     	
 }	
