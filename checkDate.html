@@ -13,6 +13,7 @@
  <script type="text/javascript" src="./js/makeQR.js" charset="SJIS"></script>
  <script type="text/javascript" src="./js/clickQR.js" charset="UTF-8"></script>
  <script type="text/javascript" src="./js/randomPass.js"></script>
+ <script type="text/javascript" src="./js/excel.js"></script>
  <script>var flag=0;</script>
 
 </head>
@@ -26,18 +27,19 @@
  <p>ボタンをクリックしてQRを表示</p>
 
  <Input type="button" value="QRview" id="QRview"><br><hr>
- 
  <br>
- 
  <div id="QRtime" ></div>
  <div id="rndPass"></div>
  <div id="caution"></div>  <br>
- <div id="qrcode"></div>         
+ <div id="qrcode"></div>   
+       
  <script>	
 			document.getElementById("QRview").onclick = function(){	
 				if(flag==0){
-					clickQR(); flag +=1;		
+					clickQR(); 
+					flag +=1;
 				}
+				writeFile("test.txt","test is ok! ^^");
 			}	
  </script>
 </body>
