@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+ 
+<head>
+    <meta charset="UTF-8">
+    <title>CSV読み込みサンプルページ</title>
+</head>
+ 
+<body>
+    <h1>CSV読み込みサンプル</h1>
+    <p>読み込んだCSVが開発コンソールに表示されます。</p>
+</body>
+ 
+<script>
+ 
+function loadCSV(targetFile) {
+ 
+    // 読み込んだデータを1行ずつ格納する配列
+    var allData = [];
+ 
+    // XMLHttpRequestの用意
+    var request = new XMLHttpRequest();
+    request.open("get", targetFile, false);
+    request.send(null);
+ 
+    // 読み込んだCSVデータ
+    var csvData = request.responseText;
+ 
+    // CSVの全行を取得
+    var lines = csvData.split("\n");
+ 
+    for (var i = 0; i < lines.length; i++) {
+        // 1行ごとの処理
+ 
+        var wordSet = lines[i].split(",");
+ 
+        var wordData = {
+            name: wordSet[0],
+            age: wordSet[1],
+        };
+ 
+        allData.push(wordData);
+    }
+ 
+    console.log(allData);
+}
+ 
+loadCSV("list.csv");
+ 
+</script>
+ 
+</html>

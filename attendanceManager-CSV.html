@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV Editor</title>
+   
+ 	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap Sample</title>
+    <!-- BootstrapのCSS読み込み -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery読み込み -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- BootstrapのJS読み込み -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- CSV読み込み用のJS読み込み -->
+    <script type="text/javascript" src="./js/jquery.csv2table.js"></script>
+ 	  <script type="text/javascript" src="./js/jquery.csv.js"></script>
+ 	  <script type="text/javascript" src="./js/jquery.readcsv.js"></script>
+</head>
+<body>
+  
+<div class="container">
+  <div class="reference">
+	   <h3>csvの参照</h3>
+	</div>
+  <div class="csv-console">
+	    <div class="edit-box">
+	      <p>・<a class="edit" href="#">csvの編集</a></p>
+	    </div>
+	    <div class="change-box">
+	     <p>・csvの変更</p>
+	     <input type="file" name="select" id="select" /><hr><br>
+      <div id="result"></div>
+	</div>
+ </div>
+	<br><br>
+	<script>
+	  if(window.File) {
+    var result = document.getElementById('result');
+    
+    var select = document.getElementById('select');
+ 
+    // ファイルが選択されたとき
+    select.addEventListener('change', function(e) {
+        // 選択されたファイルの情報を取得
+        var fileData = e.target.files[0];
+ 
+        var reader = new FileReader();
+        // ファイル読み取りに失敗したとき
+        reader.onerror = function() {
+            alert('ファイル読み取りに失敗しました')
+        }
+        // ファイル読み取りに成功したとき
+        reader.onload = function() {
+            // 行単位で配列にする
+            var lineArr = reader.result.split("\n");
+            // 行と列の二次元配列にする
+            var itemArr = [];
+            for (var i = 0; i < lineArr.length; i++) {
+                itemArr[i] = lineArr[i].split(",");
+            }
+ 
+            // tableで出力
+            var i = 0;
+            var j = 0;
+            var insert = '<table class="table">';
+            // table header
+            for ( i = 0; i  < 1 ; i++) {
+              for ( j = 0; j < 5; j++){ 
+                   insert += '<th>' + itemArr[i][j] + '</th>';
+                }
+            }
+            // table columns j = vertical , i = horizontal
+            for ( i = 1; i < itemArr[i].length; i++) {
+                insert += '<tr class="line" id="line' + i + '">'  ;
+                for ( j = 0; j < itemArr[i].length; j++) {
+                  
+                    insert += '<td>' + itemArr[i][j] + '</td>';
+                }
+                insert += '</tr>';
+            }
+            insert += '</table>';
+            result.innerHTML = insert;
+        }
+ 
+        // ファイル読み取りを実行
+        reader.readAsText(fileData);
+    }, false);
+}
+	</script>
+	<script>
+		$(function() {
+    var target = '#result';
+    var csvList;
+    var insert_sample = '';
+    $.ajax({
+        url: 'list.csv',
+        success: function(data) {
+ 
+            // csvを配列に格納
+            csvList = $.csv()(data);
+            
+            // 挿入するHTMLを作成
+            // table header
+         	  var si = 0;
+         	  insert_sample += 
+         	    '<p>This is default csv sample file : list.csv</p>'+
+        		   '<table class="table">'
+                + '<tr class="line" id="line' + si + '">'     
+                + '<th>' + csvList[si][0] + '</th>'
+                + '<th>' + csvList[si][1] + '</th>'
+                + '<th>' + csvList[si][2] + '</th>'
+                + '<th>' + csvList[si][3] + '</th>'
+                + '<th>' + csvList[si][4] + '</th>'
+                +'</tr>'
+                +'</table>';
+         	  // table columns
+            for ( si = 1; si < csvList.length; si++) {
+        		   insert_sample  += 
+        		   '<table class="table">'
+                + '<tr class="line" id="line' + si + '">'     
+                + '<td>' + csvList[si][0] + '</td>'
+                + '<td>' + csvList[si][1] + '</td>'
+                + '<td>' + csvList[si][2] + '</td>'
+                + '<td>' + csvList[si][3] + '</td>'
+                + '<td>' + csvList[si][4] + '</td>'
+                +'</tr>'
+                +'</table>';
+            };
+            insert_sample  += '<hr><br>';
+            $(target).append(insert_sample);
+        }
+    	});
+	});
+	</script>
+	<br><hr>
+	<p>参考</p>
+    <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>名前</th>
+        <th>メールアドレス</th>
+        <th>電話番号</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+          <td>煌木 太郎</td>
+          <td>taro.kirameki@example.com</td>
+          <td>09011112222</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+          <td>煌木 次郎</td>
+          <td>jiro.kirameki@example.com</td>
+          <td>09033334444</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+          <td>煌木 花子</td>
+          <td>hanako.kirameki@example.com</td>
+          <td>09055556666</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</body>
+ 
+	<!--
+	<table class="table">
+	 <thead>
+      <tr>
+        <th  class="#">#</th>
+        <th  class="name">名前</th>
+        <th  class="mail">メールアドレス</th>
+        <th  class="tel">電話番号</th>
+      </tr>
+    </thead>
+	</table>
+	-->
+	
+ 
+</html>

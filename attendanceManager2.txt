@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+ 
+<head>
+    <meta charset="UTF-8">
+    <title>CSV読み込みサンプルページ</title>
+    <link rel="stylesheet" type="text/css" href="base.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.csv2table.js"></script>
+ 	<script type="text/javascript" src="./js/jquery.csv.js"></script>
+ 	<script type="text/javascript" src="./js/jquery.readcsv.js"></script>
+ 	
+</head>
+ 
+<body>
+    <h1>CSV読み込み</h1>
+    	
+	
+	<input type="file" name="file" id="demo_file">
+	<div id="demo_info">エラーを出力</div>
+	<div id="demo_data">ここにデータを出力</div>
+	<div id="default_data">デフォルトデータを出力</div>
+	
+	<hr>
+		<ul id="itemlist">itemlist</ul>
+	<hr>
+	
+	<script>
+	$(window).load(function () {
+    $.get('./itemlist.csv',function(data){
+        var csv = $.csv()(data);
+        var itemlist = '';
+
+        //indexを使ってくり返し回数をカウント
+        $(csv).each(function(index){
+            if(this[0] && this[1] == 1){
+                itemlist += '<li><a href="' + this[0] + '">' + this[2] + '</a></li>';
+            }
+		})
+		$("#itemlist").append(itemlist);
+    	})
+	})
+	</script>
+	
+	
+	<script>
+		var file = document.getElementById('demo_file');
+		var default_file = document.getElementById('default_data');
+		var result = document.getElementById('demo_info');
+ 
+		// HTML5 のFile APIに対応している場合
+		if(window.File && window.FileReader && window.FileList && window.Blob) {
+    	function loadLocalCsv(e) {
+        // ファイルデータ取得
+        var fileData = e.target.files[0];
+ 
+        // CSVファイルチェック
+        if(!fileData.name.match('.csv$')) {
+            alert('CSVファイルを選択してください');
+            return;
+        }
+ 
+        // ファイル読み込み
+        var reader = new FileReader();
+        // ファイル読み込みに成功時、カンマ区切りを配列に加工
+        reader.onload = function() {
+            var cols = reader.result.split('\n');
+            var data = [];
+            for (var i = 0; i < cols.length; i++) {
+                data[i] = cols[i].split(',');
+            }
+            createView(data);
+        }
+        // ファイル読み込みを実行
+        reader.readAsText(fileData);
+    }
+    file.addEventListener('change', loadLocalCsv, false);
+ 
+	} else {
+    	file.style.display = 'none';
+    	result.innerHTML = 'File APIに対応したブラウザでご確認ください';
+	}
+	</script>
+	
+
+	<script>
+		function createView(data) {
+    	// 挿入するHTMLを作成 jquery
+    	insert ='';
+    	for (var i = 0; i < data.length; i++) {
+    	insert +='<tr class="CSV_list"><br>';
+	    	for (var j = 0; j < data[i].length; j++) {
+	        	insert += '<th class="CSV_data">' + data[i][j] + '</th> +"		"';
+	    	};
+        	insert += '</tr>';
+    	};
+		$("#demo_data").html(insert);
+	}
+	</script>
+</body>
+ 
+
+ 
+</html>
